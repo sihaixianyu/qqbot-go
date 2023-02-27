@@ -1,0 +1,6 @@
+# 用于识别一个机器人的id
+app_id = 102039027
+# 用于在 oauth 场景进行请求签名的密钥
+secret = "tdAUacYHn6B2DERV"
+# 机器人token，用于以机器人身份调用 openapi，格式为 ${app_id}.${random_str}
+token = "bT7BM3s4APt2aNalppk5xLiwTQSCoaWj"
