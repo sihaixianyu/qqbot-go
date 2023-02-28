@@ -3,7 +3,7 @@ package service
 import (
 	"context"
 
-	"github.com/sihaixianyu/qqbot-go/chatgpt"
+	"github.com/solywsh/chatgpt"
 	"github.com/tencent-connect/botgo/dto"
 	"github.com/tencent-connect/botgo/dto/message"
 	"github.com/tencent-connect/botgo/log"

@@ -5,7 +5,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/sihaixianyu/qqbot-go/chatgpt"
+	"github.com/solywsh/chatgpt"
 )
 
 func TestChatWithContext(t *testing.T) {
