@@ -17,7 +17,7 @@ func ReadyHandler() event.ReadyHandler {
 	}
 }
 
-// ErrorNotifyHandler 自定义 ErrorNotifyHandler 感知错误
+// ErrorNotifyHandler 自定义 ErrorNotifyHandler 感知错误 
 func ErrorNotifyHandler() event.ErrorNotifyHandler {
 	return func(err error) {
 		logger.Error("Error notify receive: ", "err", err)
