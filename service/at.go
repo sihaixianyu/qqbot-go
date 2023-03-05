@@ -3,7 +3,6 @@ package service
 import (
 	"context"
 
-	"github.com/solywsh/chatgpt"
 	"github.com/tencent-connect/botgo/dto"
 	"github.com/tencent-connect/botgo/dto/message"
 	"github.com/tencent-connect/botgo/log"
@@ -11,13 +10,10 @@ import (
 )
 
 var apiKey string
-var chat *chatgpt.ChatGPT
 
 func init() {
 	logger = log.DefaultLogger
-
 	apiKey = "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"
-	chat = chatgpt.New(apiKey, "sihaixianyu", 0)
 }
 
 type ATService struct {
@@ -54,43 +50,11 @@ func (p ATService) Process(input string, data *dto.WSATMessageData) error {
 }
 
 func (p *ATService) Ask(ctx context.Context, data *dto.WSATMessageData, content string) {
-	chat.ChatContext.ResetConversation()
 
-	answer, err := chat.Chat(content)
-	if err != nil {
-		logger.Error("GPT Chat failed: ", "err", err)
-	}
-
-	msg := buildSimpleMessage(data, answer)
-
-	_, err = p.api.PostMessage(ctx, data.ChannelID, msg)
-	if err != nil {
-		logger.Error("Post message failed: ", "err", err)
-	}
-
-	chat.ChatContext.ResetConversation()
 }
 
 func (p *ATService) Chat(ctx context.Context, data *dto.WSATMessageData, content string) {
-	var msg *dto.MessageToCreate
-	var err error
 
-	if content == "stop" {
-		msg = buildSimpleMessage(data, "聊天已经终止！")
-		chat.ChatContext.ResetConversation()
-	} else {
-		answer, err := chat.ChatWithContext(content)
-		if err != nil {
-			logger.Error("GPT Chat failed: ", "err", err)
-		}
-
-		msg = buildSimpleMessage(data, answer)
-	}
-
-	_, err = p.api.PostMessage(ctx, data.ChannelID, msg)
-	if err != nil {
-		logger.Error("Post message failed: ", "err", err)
-	}
 }
 
 func buildSimpleMessage(data *dto.WSATMessageData, content string) *dto.MessageToCreate {

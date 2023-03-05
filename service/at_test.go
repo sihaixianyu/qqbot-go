@@ -1,32 +1,32 @@
 package service
 
 import (
+	"context"
 	"fmt"
+	"log"
 	"testing"
-	"time"
 
-	"github.com/solywsh/chatgpt"
+	"github.com/sashabaranov/go-openai"
 )
 
 func TestChatWithContext(t *testing.T) {
-	chat := chatgpt.New(apiKey, "user_id(not required)", 10*time.Second)
-	defer chat.Close()
-	//select {
-	//case <-chat.GetDoneChan():
-	//	fmt.Println("time out")
-	//}
-	question := "请你记住我的名字是CRT"
-	answer, err := chat.ChatWithContext(question)
-	if err != nil {
-		fmt.Println(err)
-	}
-	fmt.Printf("A: %s\n", answer)
-	fmt.Println("------------------------------------------------")
+	client := openai.NewClient(apiKey)
+	resp, err := client.CreateChatCompletion(
+		context.Background(),
+		openai.ChatCompletionRequest{
+			Model: openai.GPT3Dot5Turbo,
+			Messages: []openai.ChatCompletionMessage{
+				{
+					Role:    openai.ChatMessageRoleUser,
+					Content: "Hello!",
+				},
+			},
+		},
+	)
 
-	question = "我的名字是什么"
-	answer, err = chat.ChatWithContext(question)
 	if err != nil {
-		fmt.Println(err)
+		log.Fatalln(err)
 	}
-	fmt.Printf("A: %s\n", answer)
+
+	fmt.Println(resp.Choices[0].Message.Content)
 }
